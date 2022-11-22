@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.alura.gerenciador.acao.AlteraEmpresa;
+import br.com.alura.gerenciador.acao.CriandoNovaEmpresa;
 import br.com.alura.gerenciador.acao.ListaEmpresas;
 import br.com.alura.gerenciador.acao.MostraEmpresa;
 import br.com.alura.gerenciador.acao.NovaEmpresa;
@@ -49,12 +50,17 @@ public class UnicaEntradaServlet extends HttpServlet {
 
 			NovaEmpresa acao = new NovaEmpresa();
 			nome = acao.executa(request, response);
+			
+		} else if(paramAcao.equals("CriandoNovaEmpresa")) {
+			
+			CriandoNovaEmpresa acao = new CriandoNovaEmpresa();
+			nome = acao.executa(request, response);
 		}
 		
 		String[] tipoEEntrada = nome.split(":");
 
 		if (tipoEEntrada[0].equals("forward")) {
-			RequestDispatcher rd = request.getRequestDispatcher(tipoEEntrada[1]);
+			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/view/" + tipoEEntrada[1]);
 			rd.forward(request, response);
 		} else {
 			response.sendRedirect(tipoEEntrada[1]);
