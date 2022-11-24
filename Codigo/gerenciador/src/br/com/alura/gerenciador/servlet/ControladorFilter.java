@@ -20,6 +20,14 @@ import br.com.alura.gerenciador.acao.Acao;
 //@WebFilter("/entrada")
 public class ControladorFilter extends HttpFilter implements Filter {
 
+	@Override
+	public void init(FilterConfig filterConfig) throws ServletException {
+	}
+
+	@Override
+	public void destroy() {
+	}
+
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain)
 			throws IOException, ServletException {
 
@@ -30,7 +38,7 @@ public class ControladorFilter extends HttpFilter implements Filter {
 		String nomeDaClase = "br.com.alura.gerenciador.acao." + paramAcao;
 
 		String nome;
-		
+
 		try {
 
 			Class classe = Class.forName(nomeDaClase);

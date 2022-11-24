@@ -17,13 +17,22 @@ import javax.servlet.http.HttpSession;
 @WebFilter("/entrada")
 public class AutorizacaoFilter extends HttpFilter implements Filter {
 
-	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
-		
+	@Override
+	public void init(FilterConfig filterConfig) throws ServletException {
+	}
+
+	@Override
+	public void destroy() {
+	}
+
+	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain)
+			throws IOException, ServletException {
+
 		HttpServletRequest request = (HttpServletRequest) servletRequest;
 		HttpServletResponse response = (HttpServletResponse) servletResponse;
-		
+
 		String paramAcao = request.getParameter("acao");
-		
+
 		HttpSession sessao = request.getSession();
 		boolean usuarioNaoEstaLogado = (sessao.getAttribute("usuarioLogado") == null);
 		boolean ehUmaAcaoProtegida = !(paramAcao.equals("Login") || paramAcao.equals("LoginForm"));
@@ -32,7 +41,7 @@ public class AutorizacaoFilter extends HttpFilter implements Filter {
 			response.sendRedirect("entrada?acao=LoginForm");
 			return;
 		}
-		
+
 		chain.doFilter(request, response);
 	}
 
